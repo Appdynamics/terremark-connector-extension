@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="terremark.connector" default="build-deep" basedir=".">
+	<property name="src" location="src/java" />
+    <property name="content" location="src/content" />
+	<property name="build-temp" location="build-tmp" />
+	<property name="build-final" location="build" />
+	<property name="jarName" value="connector.jar" />
+	<property name="api-buildxml" location="../controller-api/build.xml" />
+	<property name="api-jar" location="../controller-api/build/controller-api.jar" />
+	<property name="connector-buildxml" location="../connector-api/build.xml" />
+	<property name="connector-jar" location="../connector-api/build/connector-api.jar" />
+    <property name="beans-buildxml" location="../controller-beans/build.xml" />
+    <property name="beans-jar" location="../controller-beans/build/controller-beans.jar" />	
+    <property name="thirdparty-lib" location="../../thirdparty/lib" />
+	<property name="shared" location="../../shared/src/java" />
+    <property name="utils-src" location="../../utils/src/java" />
+	<property name="protocol-buffer" location="../../shared/src/protocolbuffer/jars" />
+	<import file="../../thirdparty/lib/findbugs/findbugs_task.xml"/>
+	<target name="build-dependencies">
+        <ant antfile="${api-buildxml}" target="build" inheritall="false" />
+        <ant antfile="${connector-buildxml}" target="build" inheritall="false" />
+        <ant antfile="${beans-buildxml}" target="build" inheritall="false" />		
+	</target>
+
+	<target name="clean">
+		<delete failonerror="true" quiet="true" includeemptydirs="true">
+			<fileset dir="${build-final}" />
+			<fileset dir="${build-temp}" />
+		</delete>
+	</target>
+	
+	<target name="init" depends="clean">
+		<mkdir dir="${build-final}" />
+		<mkdir dir="${build-temp}" />
+	</target>
+
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${build-temp}" source="1.6" target="1.6"
+			debug="on" debuglevel="lines,vars,source">
+			<src path="${src}" />
+            <src path="${shared}"/>
+            <src path="${utils-src}/com/singularity/ee/util/exceptionop" />
+            <src path="${utils-src}/com/singularity/ee/util/io" />
+            <src path="${utils-src}/com/singularity/ee/util/reflect" />
+			<classpath>
+                <fileset file="${api-jar}" />
+                <fileset file="${connector-jar}" />				
+                <fileset file="${beans-jar}" />
+
+                <fileset dir="${thirdparty-lib}/glassfish">
+                    <include name="*.jar" />
+                </fileset>
+				<fileset file="${thirdparty-lib}/jclouds-1.0-beta-4/java-xmlbuilder-0.3.jar"/>
+				<fileset file="${thirdparty-lib}/jclouds-1.0-beta-4/jclouds-vcloud-1.0-beta-4.jar"/>
+                <fileset dir="${thirdparty-lib}/jclouds-1.0-beta-4/core/lib">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${thirdparty-lib}/jclouds-1.0-beta-4/providers/terremark/lib">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${thirdparty-lib}/hibernate">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${thirdparty-lib}/commons">
+                    <include name="*.jar" />
+                </fileset>
+				
+				<!-- Needed to compile the "shared" project" -->
+                <fileset dir="${thirdparty-lib}/commons-httpclient">
+                    <include name="*.jar" />
+                </fileset>
+
+                <fileset dir="${thirdparty-lib}/namespace-safe-xml-apis">
+                    <include name="*.jar" />
+                </fileset>
+                <fileset dir="${thirdparty-lib}/protobuf">
+                            <include name="*.jar" />
+                        </fileset>
+                <fileset file="${protocol-buffer}/protocolbuffer-schema.jar"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="package">
+		<jar destfile="${build-final}/${jarName}">
+			<fileset dir="${build-temp}" />
+		</jar>
+		
+		<copy todir="${build-final}">
+            <fileset dir="${content}">
+                <include name="*.*" />
+            </fileset>
+		</copy>
+		
+		<mkdir dir="${build-final}/lib"/>
+		
+    <copy todir="${build-final}/lib">
+      <fileset dir="${thirdparty-lib}/jclouds-1.0-beta-4">
+        <include name="jclouds-vcloud-1.0-beta-4.jar" />
+        <include name="java-xmlbuilder-0.3.jar" />
+      </fileset>	
+    	<fileset dir="${thirdparty-lib}/jclouds-1.0-beta-4/core/lib">
+    		<include name="*.jar" />
+    	</fileset>      
+    	<fileset dir="${thirdparty-lib}/jclouds-1.0-beta-4/providers/terremark/lib">
+        <include name="*.jar" />
+      </fileset>
+    </copy>	
+	</target>
+	
+	<target name="findbugs">
+		    	<findbugs home="${findbugs.home}" jvmargs="-Xmx1024M"
+			              output="xml"
+			              outputFile="${build-final}/findbugs.xml" >
+			      <sourcePath path="${src}" />
+			      <class location="${build-final}/${jarName}" />
+		       </findbugs>
+	</target>
+		
+
+	<target name="build-deep" depends="init, build-dependencies, compile, package">
+	</target>
+
+	<target name="build" depends="init, compile, package">
+	</target>
+
+</project>
