@@ -1,4 +1,4 @@
-package com.singularity.ee.connectors.terremark;
+package com.appdynamics.connectors.terremark;
 
 import org.jclouds.compute.ComputeService;
 import org.jclouds.compute.ComputeServiceContext;

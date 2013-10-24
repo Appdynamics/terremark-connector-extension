@@ -1,4 +1,4 @@
-package com.singularity.ee.connectors.terremark;
+package com.appdynamics.connectors.terremark;
 
 import java.net.InetAddress;
 import java.util.Iterator;

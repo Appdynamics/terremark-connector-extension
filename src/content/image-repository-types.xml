@@ -5,7 +5,7 @@
 		<name>Terremark vCloud Repository</name>
 		<description>Terremark vCloud Repository</description>
         <connector-impl-class-name>
-            com.singularity.ee.connectors.terremark.TerremarkVCloudConnector
+            com.appdynamics.connectors.terremark.TerremarkVCloudConnector
         </connector-impl-class-name>
 		
 		<property-definitions>
