@@ -25,7 +25,6 @@ import com.singularity.ee.connectors.entity.api.IMachine;
 import com.singularity.ee.connectors.entity.api.IMachineDescriptor;
 import com.singularity.ee.connectors.entity.api.IProperty;
 import com.singularity.ee.connectors.entity.api.MachineState;
-import com.singularity.ee.controller.entity.MachineInstanceEntity;
 
 public class TerremarkVCloudConnector implements IConnector
 {
@@ -337,15 +336,9 @@ public class TerremarkVCloudConnector implements IConnector
 			TerremarkVCloudProvider connector = ConnectorLocator.getInstance()
 					.getConnector(machine.getComputeCenter(), controllerServices);
 
-			// TODO: REMOVE ME
-			// this is just a hack so that if the machine is started again based 
-			// on VApp id and if its terminated we set the internal name to
-			// different value because when the machine is powered again we can 
-			// visualize as separate machine
 			if(!isCreateMachineFromTemplate(machine))
 			{
-				((MachineInstanceEntity) machine.getWrappedEntity())
-						.setInternalName(UUID.randomUUID().toString());
+				machine.setName(UUID.randomUUID().toString());
 			}
 			
 			VApp vApp = connector.getSyncApi().getVApp(machine.getName());
