@@ -53,6 +53,9 @@ Click Compute Cloud->Register Compute Cloud. Refer to the image below
 
 ![alt tag](https://raw.github.com/Appdynamics/terremark-connector-extension/master/TerremarkComputeCloud.png)
 
+Click Image->Register Image. Refer to the image below
+
+![alt tag](https://raw.github.com/Appdynamics/terremark-connector-extension/master/TerremarkComputeCloudImage.png)
 
 ##Contributing
 
