@@ -1,5 +1,5 @@
-terremark-connector-extension
-===================================
+Terremark Connector Extension
+=============================
 
 ##Use Case
 
