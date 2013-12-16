@@ -9,7 +9,7 @@ First, if the Controller detects that the load on the machine instances hosting 
 
 Second, if the Controller detects that the load on the machine instances hosting an application is below some minimum threshold, the terremark-connector-extension may be used to terminate virtual machines running that application. The end goal is to save power/usage costs without sacrificing application performance by horizontally scaling down application machine instances.
 
-Third, if the Controller detects that a machine instance has terminated unexpectedly when the connector refreshes an application machine s`tate, the terremark-connector-extension may be used to create a replacement virtual machine to replace the terminated application machine instance. This is known as our failover feature.
+Third, if the Controller detects that a machine instance has terminated unexpectedly when the connector refreshes an application machine state, the terremark-connector-extension may be used to create a replacement virtual machine to replace the terminated application machine instance. This is known as our failover feature.
 
 Lastly, the terremark-connector-extension may be used to stage migration of an application from a physical to virtual infrastructure. Or the terremark-connector-extension may be used to add additional virtual capacity to an application to augment a preexisting physical infrastructure hosting the application.   
 
@@ -59,11 +59,11 @@ Click Image->Register Image. Refer to the image below
 
 ##Contributing
 
-Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/terremark-connector-extension).
+Always feel free to fork and contribute any changes directly here on Github.
 
 ##Community
 
-Find out more in the [AppSphere] community.
+Find out more in the [AppSphere](http://appsphere.appdynamics.com/t5/eXchange/Terremark-Cloud-Connector-Extension/idi-p/5515) community.
 
 ##Support
 
