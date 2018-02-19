@@ -4,6 +4,8 @@
     <property name="content" location="src/content" />
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
+	<property name="licenses" value="src/licenses"/>
+
 	<property name="jarName" location="connector.jar" />
 
 	<target name="clean">
@@ -40,6 +42,9 @@
 		<copy todir="${dist}/terremark">
             		<fileset dir="${content}">
                 		<include name="*.xml" />
+            		</fileset>
+            		<fileset dir="${licenses}">
+                		<include name="*.txt" />
             		</fileset>
 		</copy>
         	<zip destfile="${dist}/terremark-connector.zip">
